@@ -41,8 +41,8 @@ public class UserController {
   }
 
   @GetMapping(value = "/{id}")
-  public UserDto getUserById(@PathVariable Long id) {
-    return userService.getUserById(id);  
+  public UserDto getUserById(@Valid @PathVariable Long id) {
+    return userService.getUserById(id);
   }
 
   @PutMapping
@@ -51,12 +51,12 @@ public class UserController {
   }
 
   @DeleteMapping(value = "/{id}")
-  public ResponseDto deleteUser(@PathVariable Long id) {
+  public ResponseDto deleteUser(@Valid @PathVariable Long id) {
     return userService.deleteUser(id);
   }
 
   @PostMapping(value = "/validarLogin/{login}/{password}")
-  public UserDto validateLogin(@PathVariable String login, @PathVariable String password) {
+  public UserDto validateLogin(@Valid @PathVariable String login, @PathVariable String password) {
     return userService.validateLogin(login, password);
   }
 }
