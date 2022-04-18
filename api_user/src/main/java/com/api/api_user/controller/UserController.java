@@ -45,7 +45,7 @@ public class UserController {
     return userService.getUserById(id);
   }
 
-  @PutMapping
+  @PutMapping(value = "/{id}")
   public ResponseDto updateUser(@Valid @RequestBody User user) {
     return userService.updateUser(user);
   }
