@@ -51,8 +51,7 @@ public class UserController {
   }
 
   @DeleteMapping(value = "/{id}")
-  public ResponseDto deleteUser(@PathVariable Long id) {
-
+  public ResponseDto deleteUser(@Valid @PathVariable Long id) {
     return userService.deleteUser(id);
   }
 
