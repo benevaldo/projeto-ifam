@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import lombok.AllArgsConstructor;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -50,15 +51,23 @@ public class UserService {
         return modelMapper.map(userRepository.findById(id).get(), UserDto.class);
     }
 
-    public ResponseDto updateUser(User user) {
-        responseDto.setId(userRepository.save(user).getId());
-        if (user.getId() > 0) {
-            userRepository.save(user);
-            responseDto.setMenssage("Usuário alterado com sucesso...");
-            responseDto.setStatus(Status.SUCCESS.value());
+    public ResponseDto updateUser(Long id, User user) {
+        
+        Optional<User> optional = userRepository.findById(id);
+        
+        if (optional.isEmpty()) {
+            responseDto.setMenssage("Usuário inexistente...");
+            responseDto.setStatus(Status.NOT_FOUND.value());
         } else {
-            responseDto.setMenssage("ID do Usuário inválido...");
-            responseDto.setStatus(Status.ERROR.value());
+            responseDto.setId(userRepository.save(user).getId());
+            if (user.getId() > 0) {
+                userRepository.save(user);
+                responseDto.setMenssage("Usuário alterado com sucesso...");
+                responseDto.setStatus(Status.SUCCESS.value());
+            } else {
+                responseDto.setMenssage("ID do Usuário inválido...");
+                responseDto.setStatus(Status.ERROR.value());
+            }
         }
         return responseDto;
     }
