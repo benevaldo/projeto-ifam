@@ -2,6 +2,7 @@ package com.api.api_user.domain.exceptions;
 
 import java.time.ZonedDateTime;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -41,6 +42,14 @@ public class AppExceptionHandler extends RuntimeException {
                 ZonedDateTime.now(), responseErros);
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
 
+    }
+
+    @ExceptionHandler(EmptyResultDataAccessException.class)
+    private ResponseEntity handleNotFoundException(EmptyResultDataAccessException ex) {
+
+        NotFoundExceptionModel error = new NotFoundExceptionModel(HttpStatus.NOT_FOUND.value(), "Usuário não encontrado!", ZonedDateTime.now());
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+        
     }
 
 }
