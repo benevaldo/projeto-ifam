@@ -2,6 +2,8 @@ package com.api.api_user.domain.exceptions;
 
 import java.time.ZonedDateTime;
 
+import org.apache.logging.log4j.message.Message;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -43,4 +45,13 @@ public class AppExceptionHandler extends RuntimeException {
 
     }
 
+
+    @ExceptionHandler(EmptyResultDataAccessException.class)
+    private ResponseEntity NotFoundException(Exception ex) {
+        DefaultExceptionModel error = new DefaultExceptionModel(HttpStatus.NOT_FOUND.value(),
+                ex.getLocalizedMessage(), ZonedDateTime.now());
+
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+
+    }
 }
