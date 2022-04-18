@@ -50,16 +50,26 @@ public class UserService {
         return modelMapper.map(userRepository.findById(id).get(), UserDto.class);
     }
 
-    public ResponseDto updateUser(User user) {
-        responseDto.setId(userRepository.save(user).getId());
-        if (user.getId() > 0) {
-            userRepository.save(user);
-            responseDto.setMenssage("Usuário alterado com sucesso...");
-            responseDto.setStatus(Status.SUCCESS.value());
-        } else {
+    public ResponseDto updateUser(User user) {    
+        var id = user.getId();
+        var existUser = userRepository.findById(id);
+        if (existUser.isEmpty()){
             responseDto.setMenssage("ID do Usuário inválido...");
             responseDto.setStatus(Status.ERROR.value());
-        }
+        }else{
+            responseDto.setId(userRepository.save(user).getId());
+            if(user.getId() > 0){
+                userRepository.save(user);
+                responseDto.setMenssage("Usuário alterado com sucesso...");
+                responseDto.setStatus(Status.SUCCESS.value());
+            }else{
+                responseDto.setMenssage("ID do Usuário inválido...");
+                responseDto.setStatus(Status.ERROR.value());
+            }
+            
+            
+        }          
+        
         return responseDto;
     }
 

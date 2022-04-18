@@ -23,18 +23,22 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
+
     @Column(name="nome")
     @NotBlank(message = "Nome é obrigatório")
     @Length(message="Nome com no máximo 50 caracteres",max=50)
     String nome;
+
     @Column(name="login")
     @NotBlank(message = "Login é obrigatório")
     @Length(message="Login com no máximo 30 caracteres",max=30)
     String login;
+
     @Column(name="senha")
     @NotBlank(message = "Senha é obrigatória")
     @Length(message="Senha com no máximo 30 caracteres",max=30)
     String senha;
+    
     @Column(name="email")
     @NotBlank(message = "E-mail é obrigatório")
     @Email(message="Deve ser um endereço de e-mail bem formado")
