@@ -51,16 +51,19 @@ public class UserService {
     }
 
     public ResponseDto updateUser(User user) {
-        responseDto.setId(userRepository.save(user).getId());
-        if (user.getId() > 0) {
-            userRepository.save(user);
+
+        // UserDto userBanco = getUserById(user.getId());
+        if (userRepository.existsById(user.getId())){
+            responseDto.setId(userRepository.save(user).getId());
             responseDto.setMenssage("Usuário alterado com sucesso...");
             responseDto.setStatus(Status.SUCCESS.value());
         } else {
-            responseDto.setMenssage("ID do Usuário inválido...");
+            // responseDto.setId(userRepository.save(user).getId());
+            responseDto.setMenssage("Usuário inválido");
             responseDto.setStatus(Status.ERROR.value());
         }
         return responseDto;
+        
     }
 
     public ResponseDto deleteUser(Long id) {
