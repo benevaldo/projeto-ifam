@@ -3,6 +3,7 @@ package com.api.api_user.domain.exceptions;
 import java.time.ZonedDateTime;
 
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -13,6 +14,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityNotFoundException;
+import java.util.NoSuchElementException;
+
+import javax.persistence.EntityNotFoundException;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -22,7 +27,7 @@ public class AppExceptionHandler extends RuntimeException {
     @ExceptionHandler(Exception.class)
     private ResponseEntity handleException(Exception ex) {
         DefaultExceptionModel error = new DefaultExceptionModel(HttpStatus.BAD_REQUEST.value(),
-                ex.getMessage(), ZonedDateTime.now());
+                ex.getLocalizedMessage(), ZonedDateTime.now());
 
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
 
@@ -50,7 +55,18 @@ public class AppExceptionHandler extends RuntimeException {
         DefaultExceptionModel error = new DefaultExceptionModel(HttpStatus.NOT_FOUND.value(),
                 "Usuário não encontrado", ZonedDateTime.now());
 
+
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
+    // private ResponseEntity handleNotFoundException(EmptyResultDataAccessException ex) {
+    //     NotFoundExceptionModel error = new NotFoundExceptionModel(HttpStatus.NOT_FOUND.value(), ZonedDateTime.now(),
+    //             ex.getLocalizedMessage());
 
+    // @ExceptionHandler(NoSuchElementException.class)
+    // private ResponseEntity handleNotFoundException(NoSuchElementException ex) {
+    //     NotFoundExceptionModel error = new NotFoundExceptionModel(HttpStatus.NOT_FOUND.value(), ZonedDateTime.now(),
+    //             ex.getLocalizedMessage());
+
+    //     return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    // }
 }
