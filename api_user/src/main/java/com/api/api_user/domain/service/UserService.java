@@ -57,7 +57,7 @@ public class UserService {
             responseDto.setMenssage("Usuário alterado com sucesso...");
             responseDto.setStatus(Status.SUCCESS.value());
         } else {
-            responseDto.setMenssage("Usuário não existe!");
+            responseDto.setMenssage("Usuário não encontrado!");
             responseDto.setStatus(Status.ERROR.value());
         }
         return responseDto;
