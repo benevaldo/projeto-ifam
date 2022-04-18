@@ -45,9 +45,9 @@ public class UserController {
     return userService.getUserById(id);  
   }
 
-  @PutMapping
-  public ResponseDto updateUser(@Valid @RequestBody User user) {
-    return userService.updateUser(user);
+  @PutMapping(value = "/{id}")
+  public ResponseDto updateUser(@PathVariable Long id, @Valid @RequestBody User user) {
+    return userService.updateUser(id, user);
   }
 
   @DeleteMapping(value = "/{id}")
