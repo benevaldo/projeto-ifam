@@ -12,15 +12,19 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.ArrayList;
 import java.util.List;
+<<<<<<< Updated upstream
 import javax.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
+=======
+// import lombok.extern.slf4j.Slf4j;
+>>>>>>> Stashed changes
 
-@Slf4j
+// @Slf4j
 @ControllerAdvice
 public class AppExceptionHandler extends RuntimeException {
 
     @ExceptionHandler(Exception.class)
-    private ResponseEntity handleException(Exception ex) {
+    private ResponseEntity<Object> handleException(Exception ex) {
         DefaultExceptionModel error = new DefaultExceptionModel(HttpStatus.BAD_REQUEST.value(),
                 ex.getMessage(), ZonedDateTime.now());
 
@@ -29,7 +33,7 @@ public class AppExceptionHandler extends RuntimeException {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    private ResponseEntity handleValidationException(MethodArgumentNotValidException ex) {
+    private ResponseEntity<Object> handleValidationException(MethodArgumentNotValidException ex) {
 
         List<FieldError> fieldErrors = ex.getFieldErrors();
 
@@ -46,11 +50,20 @@ public class AppExceptionHandler extends RuntimeException {
     }
 
     @ExceptionHandler(EmptyResultDataAccessException.class)
+<<<<<<< Updated upstream
     private ResponseEntity handleEntityNotFoundException(EmptyResultDataAccessException ex) {
         DefaultExceptionModel error = new DefaultExceptionModel(HttpStatus.NOT_FOUND.value(),
                 "Usuário não encontrado", ZonedDateTime.now());
 
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+=======
+    private ResponseEntity<Object> handleException(EmptyResultDataAccessException ex) {
+        NotFoundExceptionModel error = new NotFoundExceptionModel(HttpStatus.NOT_FOUND.value(),
+                "ID não existe", ZonedDateTime.now());
+
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+        
+>>>>>>> Stashed changes
     }
 
 }
