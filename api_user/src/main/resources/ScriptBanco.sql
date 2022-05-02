@@ -19,10 +19,10 @@ CREATE TABLE usuario(
 
 CREATE TABLE cliente(
     id int AUTO_INCREMENT,
-    cpf varchar(50) NOT NULL,
+    cpf varchar(11) NOT NULL,
     nome varchar(50) NOT NULL,
-    sexo varchar(2) NOT NULL,
-    nascimento varchar(10) NOT NULL,
+    sexo varchar(1) NOT NULL,
+    nascimento DATE NOT NULL DEFAULT CURRENT_TIME,
     PRIMARY KEY (id)
 );
 

@@ -2,6 +2,8 @@ package com.api.api_user.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import com.api.api_user.domain.dto.ClienteDTO;
 import com.api.api_user.domain.dto.ResponseDto;
 import com.api.api_user.domain.dto.UserDto;
@@ -35,7 +37,7 @@ public class ClienteController {
 
     @PostMapping() //http://localhost:8080/cliente/
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseDto postMethodName(@RequestBody Cliente cliente) {
+    public ResponseDto postMethodName(@Valid @RequestBody Cliente cliente) {
         return this.clienteService.saveClient(cliente);
     }
     
@@ -45,17 +47,17 @@ public class ClienteController {
     }
 
     @GetMapping(value = "/{id}")
-    public ClienteDTO getUserById(@PathVariable Long id) {
+    public ClienteDTO getUserById(@Valid @PathVariable Long id) {
         return clienteService.getClienteById(id);
     }
 
     @PutMapping
-    public ResponseDto updateUser(@RequestBody Cliente cliente) {
+    public ResponseDto updateUser(@Valid @RequestBody Cliente cliente) {
       return clienteService.updateCliente(cliente);
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseDto deleteUser(@PathVariable Long id) {
+    public ResponseDto deleteUser(@Valid @PathVariable Long id) {
       return clienteService.deleteUser(id);
     }
 }

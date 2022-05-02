@@ -2,6 +2,8 @@ package com.api.api_user.domain.exceptions;
 
 import java.time.ZonedDateTime;
 
+import org.hibernate.exception.DataException;
+import org.hibernate.validator.internal.engine.ConstraintViolationImpl;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,11 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+
+import javax.persistence.PersistenceException;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -28,7 +35,7 @@ public class AppExceptionHandler extends RuntimeException {
 
     }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ExceptionHandler({MethodArgumentNotValidException.class })
     private ResponseEntity handleValidationException(MethodArgumentNotValidException ex) {
 
         List<FieldError> fieldErrors = ex.getFieldErrors();
