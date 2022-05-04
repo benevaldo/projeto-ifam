@@ -16,3 +16,14 @@ CREATE TABLE usuario(
     email varchar(50) NOT NULL,
     PRIMARY KEY (id)
 );
+
+CREATE TABLE cliente(
+    id int AUTO_INCREMENT,
+    cpf varchar(11) NOT NULL,
+    nome varchar(50) NOT NULL,
+    sexo varchar(1) NOT NULL,
+    nascimento DATE NOT NULL DEFAULT CURRENT_TIME,
+    PRIMARY KEY (id)
+);
+
+REPAIR TABLE mysql.db

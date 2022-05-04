@@ -51,8 +51,9 @@ public class UserService {
     }
 
     public ResponseDto updateUser(User user) {
-        responseDto.setId(userRepository.save(user).getId());
+        // responseDto.setId(userRepository.save(user).getId());
         if (user.getId() > 0) {
+            this.userRepository.findById(user.getId()).get();
             userRepository.save(user);
             responseDto.setMenssage("Usuário alterado com sucesso...");
             responseDto.setStatus(Status.SUCCESS.value());

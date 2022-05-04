@@ -2,6 +2,8 @@ package com.api.api_user.domain.exceptions;
 
 import java.time.ZonedDateTime;
 
+import org.hibernate.exception.DataException;
+import org.hibernate.validator.internal.engine.ConstraintViolationImpl;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,13 +14,18 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.EntityNotFoundException;
+import java.util.NoSuchElementException;
+
+import javax.persistence.PersistenceException;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @ControllerAdvice
 public class AppExceptionHandler extends RuntimeException {
-
+    
     @ExceptionHandler(Exception.class)
     private ResponseEntity handleException(Exception ex) {
         DefaultExceptionModel error = new DefaultExceptionModel(HttpStatus.BAD_REQUEST.value(),
@@ -28,7 +35,7 @@ public class AppExceptionHandler extends RuntimeException {
 
     }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ExceptionHandler({MethodArgumentNotValidException.class })
     private ResponseEntity handleValidationException(MethodArgumentNotValidException ex) {
 
         List<FieldError> fieldErrors = ex.getFieldErrors();
@@ -45,8 +52,17 @@ public class AppExceptionHandler extends RuntimeException {
 
     }
 
-    @ExceptionHandler(EmptyResultDataAccessException.class)
-    private ResponseEntity handleEntityNotFoundException(EmptyResultDataAccessException ex) {
+    /*
+    @ExceptionHandler(NoSuchElementException.class)
+    private ResponseEntity noSuchElementException(Exception ex) {
+        DefaultExceptionModel error = new DefaultExceptionModel(HttpStatus.NOT_FOUND.value(),
+                "Usuário não encontrado GET", ZonedDateTime.now());
+
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }*/
+
+    @ExceptionHandler({EmptyResultDataAccessException.class, NoSuchElementException.class})
+    private ResponseEntity notFoundException(Exception ex) {
         DefaultExceptionModel error = new DefaultExceptionModel(HttpStatus.NOT_FOUND.value(),
                 "Usuário não encontrado", ZonedDateTime.now());
 
