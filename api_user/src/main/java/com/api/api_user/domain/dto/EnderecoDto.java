@@ -7,9 +7,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDto {
-    Long id;
-    String nome;
-    String login;
-    String email;  
+public class EnderecoDto {
+    String cep;
+    String rua;
+    String bairro;
+    String numero;
+    String cidade;
+    String uf;
 }
