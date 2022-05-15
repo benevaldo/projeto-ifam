@@ -9,8 +9,6 @@ GRANT ALL PRIVILEGES ON banco.* TO 'root' @'localhost';
 USE banco;
 -- Criar a tabela: cliente
 -- Criar a tabela: endereco
-
-create database banco;
 USE banco;
 
 CREATE TABLE endereco(

@@ -28,12 +28,12 @@ public class ClienteService {
     private ResponseDto responseDto;
 
     ClienteRepository clienteRepository;
-    
+
     public ResponseDto saveCliente(Cliente cliente) {
-        String url = "https://viacep.com.br/ws/" + 
-        cliente.getEndereco().getCep() + "/json/?callback=endereco";
+        String url = "https://viacep.com.br/ws/" +
+                cliente.getEndereco().getCep() + "/json/?callback=endereco";
         RestTemplate restTemplate = new RestTemplate();
-        String CEP = restTemplate.getForObject(url, String.class); 
+        String CEP = restTemplate.getForObject(url, String.class);
 
         if (CEP.contains("erro")) {
             System.out.println(CEP.contains("entra aqui"));
@@ -67,17 +67,16 @@ public class ClienteService {
     }
 
     public ResponseDto updateCliente(Cliente cliente) {
-        responseDto.setId(clienteRepository.save(cliente).getId());
-        if (clienteRepository.existsById(cliente.getId())) { 
+        if (clienteRepository.existsById(cliente.getId())) {
             if (cliente.getId() > 0) {
-                clienteRepository.save(cliente);
+                responseDto.setId(clienteRepository.save(cliente).getId());
                 responseDto.setMenssage("Usuário alterado com sucesso...");
                 responseDto.setStatus(Status.SUCCESS.value());
             } else {
                 responseDto.setMenssage("ID do Usuário inválido...");
                 responseDto.setStatus(Status.ERROR.value());
             }
-        }   
+        }
 
         return responseDto;
     }
@@ -94,7 +93,7 @@ public class ClienteService {
         }
         return responseDto;
     }
-    
+
     public ClienteDto validateLogin(String login, String password) {
         return modelMapper.map(clienteRepository.findClienteByLoginAndPassword(login, password), ClienteDto.class);
     }
