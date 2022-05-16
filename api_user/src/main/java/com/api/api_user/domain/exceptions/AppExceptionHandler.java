@@ -48,7 +48,7 @@ public class AppExceptionHandler extends RuntimeException {
     @ExceptionHandler(EmptyResultDataAccessException.class)
     private ResponseEntity handleEntityNotFoundException(EmptyResultDataAccessException ex) {
         DefaultExceptionModel error = new DefaultExceptionModel(HttpStatus.NOT_FOUND.value(),
-                "Usuário não encontrado", ZonedDateTime.now());
+                "Cliente não encontrado", ZonedDateTime.now());
 
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }

@@ -7,12 +7,33 @@ create database banco;
 GRANT ALL PRIVILEGES ON banco.* TO 'root' @'localhost';
 -- Acesar o banco de dados: banco
 USE banco;
--- Criar a tabela: usuario
-CREATE TABLE usuario(
+-- Criar a tabela: cliente
+-- Criar a tabela: endereco
+USE banco;
+
+CREATE TABLE endereco(
     id int AUTO_INCREMENT,
-    nome varchar(50) NOT NULL,
-    login varchar(20) NOT NULL,
-    senha varchar(20) NOT NULL,
-    email varchar(50) NOT NULL,
+    cep varchar(8) NOT NULL,
+    rua varchar(30) NOT NULL,
+    bairro varchar(30) NOT NULL,
+    numero varchar(5) NOT NULL,
+    cidade varchar(30) NOT NULL,
+    uf varchar(2) NOT NULL,
     PRIMARY KEY (id)
 );
+
+CREATE TABLE cliente(
+    id int AUTO_INCREMENT,
+    cpf varchar(11) NOT NULL,
+    nome varchar(50) NOT NULL,
+    sexo varchar(1) NOT NULL,
+    login varchar(30) NOT NULL,
+    senha varchar(30) NOT NULL,
+    email varchar(50) NOT NULL,
+    dataNascimento DATE NOT NULL,
+    endereco int,
+    PRIMARY KEY (id),
+    FOREIGN KEY (endereco) REFERENCES endereco(id)
+);
+
+# docker-compose up && docker-compose rm -fvs
